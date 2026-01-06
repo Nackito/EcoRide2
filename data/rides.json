@@ -10,10 +10,26 @@
     "seats": 3,
     "price": 25,
     "eco": true,
-    "vehicle": { "brand": "Renault", "model": "ZOE", "energy": "Électrique", "plate": "EV-123-ZE", "color": "Vert" },
+    "vehicle": {
+      "brand": "Renault",
+      "model": "ZOE",
+      "energy": "Électrique",
+      "plate": "EV-123-ZE",
+      "color": "Vert"
+    },
     "reviews": [
-      { "id": "v1", "comment": "Très ponctuelle", "note": 5, "statut": "valide" },
-      { "id": "v2", "comment": "Trajet confortable", "note": 4, "statut": "valide" }
+      {
+        "id": "v1",
+        "comment": "Très ponctuelle",
+        "note": 5,
+        "statut": "valide"
+      },
+      {
+        "id": "v2",
+        "comment": "Trajet confortable",
+        "note": 4,
+        "statut": "valide"
+      }
     ],
     "preferences": { "fumeur": false, "animaux": true }
   },
@@ -28,8 +44,16 @@
     "seats": 1,
     "price": 22,
     "eco": false,
-    "vehicle": { "brand": "Peugeot", "model": "308", "energy": "Essence", "plate": "AB-456-CD", "color": "Bleu" },
-    "reviews": [ { "id": "v3", "comment": "Sympa", "note": 4, "statut": "valide" } ],
+    "vehicle": {
+      "brand": "Peugeot",
+      "model": "308",
+      "energy": "Essence",
+      "plate": "AB-456-CD",
+      "color": "Bleu"
+    },
+    "reviews": [
+      { "id": "v3", "comment": "Sympa", "note": 4, "statut": "valide" }
+    ],
     "preferences": { "fumeur": false, "animaux": false }
   },
   {
@@ -43,8 +67,16 @@
     "seats": 2,
     "price": 15,
     "eco": true,
-    "vehicle": { "brand": "Tesla", "model": "Model 3", "energy": "Électrique", "plate": "EL-789-GR", "color": "Blanc" },
-    "reviews": [ { "id": "v4", "comment": "Super trajet", "note": 5, "statut": "valide" } ],
+    "vehicle": {
+      "brand": "Tesla",
+      "model": "Model 3",
+      "energy": "Électrique",
+      "plate": "EL-789-GR",
+      "color": "Blanc"
+    },
+    "reviews": [
+      { "id": "v4", "comment": "Super trajet", "note": 5, "statut": "valide" }
+    ],
     "preferences": { "fumeur": false, "animaux": true }
   },
   {
@@ -58,8 +90,16 @@
     "seats": 0,
     "price": 18,
     "eco": false,
-    "vehicle": { "brand": "Citroën", "model": "C3", "energy": "Diesel", "plate": "CD-321-EF", "color": "Gris" },
-    "reviews": [ { "id": "v5", "comment": "Correct", "note": 3, "statut": "valide" } ],
+    "vehicle": {
+      "brand": "Citroën",
+      "model": "C3",
+      "energy": "Diesel",
+      "plate": "CD-321-EF",
+      "color": "Gris"
+    },
+    "reviews": [
+      { "id": "v5", "comment": "Correct", "note": 3, "statut": "valide" }
+    ],
     "preferences": { "fumeur": true, "animaux": false }
   },
   {
@@ -73,8 +113,16 @@
     "seats": 4,
     "price": 27,
     "eco": true,
-    "vehicle": { "brand": "Renault", "model": "Mégane E-Tech", "energy": "Électrique", "plate": "RE-852-ZE", "color": "Noir" },
-    "reviews": [ { "id": "v6", "comment": "Top", "note": 5, "statut": "valide" } ],
+    "vehicle": {
+      "brand": "Renault",
+      "model": "Mégane E-Tech",
+      "energy": "Électrique",
+      "plate": "RE-852-ZE",
+      "color": "Noir"
+    },
+    "reviews": [
+      { "id": "v6", "comment": "Top", "note": 5, "statut": "valide" }
+    ],
     "preferences": { "fumeur": false, "animaux": false }
   }
 ]
