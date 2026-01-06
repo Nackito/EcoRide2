@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>EcoRide • Covoiturages</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body data-page="results">
+    <header class="topbar">
+      <div class="brand">🌿 EcoRide</div>
+      <nav>
+        <a href="/index.html">Accueil</a>
+        <a class="active" href="/results.html">Covoiturages</a>
+        <a href="#" onclick="alert('Fonctionnalité à venir')">Connexion</a>
+        <a href="/index.html#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main class="container">
+      <section class="search small">
+        <form id="search-form">
+          <input type="text" name="from" placeholder="Ville de départ" required />
+          <input type="text" name="to" placeholder="Ville d'arrivée" required />
+          <input type="date" name="date" />
+          <button type="submit">Rechercher</button>
+        </form>
+      </section>
+
+      <section class="filters">
+        <h3>Filtres</h3>
+        <label><input type="checkbox" id="filter-eco" /> Écologique (voiture électrique)</label>
+        <label>Prix max (€) <input type="number" id="filter-price" min="0" step="1" /></label>
+        <label>Durée max (min) <input type="number" id="filter-duration" min="0" step="5" /></label>
+        <label>Note min conducteur <input type="number" id="filter-rating" min="0" max="5" step="0.1" /></label>
+        <button id="apply-filters">Appliquer les filtres</button>
+      </section>
+
+      <section>
+        <div id="suggestion" class="suggestion" hidden></div>
+        <ul id="results" class="results"></ul>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div>Email: <a href="mailto:contact@ecoride.example">contact@ecoride.example</a></div>
+      <div><a href="/mentions-legales.html">Mentions légales</a></div>
+    </footer>
+
+    <script src="/app.js"></script>
+  </body>
+  </html>

@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>EcoRide • Accueil</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body data-page="home">
+    <header class="topbar">
+      <div class="brand">🌿 EcoRide</div>
+      <nav>
+        <a href="/index.html">Accueil</a>
+        <a href="/results.html">Covoiturages</a>
+        <a href="#" onclick="alert('Fonctionnalité à venir')">Connexion</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main class="container">
+      <section class="hero">
+        <h1>Réduisons l'impact des déplacements, ensemble.</h1>
+        <p>EcoRide favorise le covoiturage écologique et économique. Optez pour des trajets à faible empreinte carbone, idéalement en véhicule électrique.</p>
+        <img class="hero-img" alt="Illustration écologique" src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1200&auto=format&fit=crop" />
+      </section>
+
+      <section class="search">
+        <h2>Trouver un itinéraire</h2>
+        <form id="search-form">
+          <input type="text" name="from" placeholder="Ville de départ" required />
+          <input type="text" name="to" placeholder="Ville d'arrivée" required />
+          <input type="date" name="date" />
+          <button type="submit">Rechercher</button>
+        </form>
+      </section>
+    </main>
+
+    <footer id="contact" class="footer">
+      <div>Email: <a href="mailto:contact@ecoride.example">contact@ecoride.example</a></div>
+      <div><a href="/mentions-legales.html">Mentions légales</a></div>
+    </footer>
+
+    <script src="/app.js"></script>
+  </body>
+  </html>

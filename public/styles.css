@@ -1,0 +1,27 @@
+:root{--green:#2e7d32;--green-2:#66bb6a;--earth:#4e342e;--bg:#f4fff6}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,'Noto Sans',sans-serif;background:var(--bg);color:#123}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:linear-gradient(90deg,var(--green),var(--green-2));color:#fff}
+.topbar a{color:#fff;text-decoration:none;margin:0 8px}
+.topbar a.active{font-weight:700;text-decoration:underline}
+.brand{font-weight:700}
+.container{max-width:980px;margin:20px auto;padding:0 16px}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;align-items:center}
+.hero-img{width:100%;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,.15)}
+.search{margin:26px 0}
+.search.small{margin:10px 0}
+form#search-form{display:flex;gap:10px;flex-wrap:wrap}
+form#search-form input,form#search-form button{padding:10px 12px;border-radius:8px;border:1px solid #cfd8dc}
+form#search-form button{background:var(--green);color:#fff;border:none;cursor:pointer}
+.footer{display:flex;gap:20px;justify-content:center;border-top:1px solid #e0e0e0;padding:16px;background:#fff;margin-top:40px}
+.results{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:10px;padding:14px;box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.result .header{display:flex;align-items:center;gap:10px}
+.driver-photo{width:42px;height:42px;border-radius:50%;background:#e8f5e9;display:inline-block}
+.badge{display:inline-block;background:#e8f5e9;color:var(--green);border:1px solid #a5d6a7;border-radius:999px;padding:2px 8px;font-size:12px}
+.result .meta{display:flex;justify-content:space-between;margin-top:8px;color:#456}
+.result button{margin-top:8px;width:100%;padding:10px;border-radius:8px;background:var(--green);color:#fff;border:none;cursor:pointer}
+.filters{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+.suggestion{background:#fff3cd;border:1px solid #ffeeba;color:#856404;padding:10px;border-radius:8px;margin-bottom:12px}
+.back{display:inline-block;margin:10px 0}
+@media(max-width:800px){.hero{grid-template-columns:1fr}.filters{flex-direction:column;align-items:flex-start}}
