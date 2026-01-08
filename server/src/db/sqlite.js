@@ -71,10 +71,8 @@ export function getDb() {
           return rows;
         },
         run: (...params) => {
-          const stmt = _db.prepare(sql);
-          stmt.bind(params);
-          stmt.step();
-          stmt.free();
+          // Use Database.run for non-select statements
+          _db.run(sql, params);
           // try to fetch last insert id if relevant
           let lastId;
           try {

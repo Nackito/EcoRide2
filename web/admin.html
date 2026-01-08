@@ -63,6 +63,9 @@
       const token = localStorage.getItem("token");
       if (!token) location = "index.html";
 
+      const api = location.origin;
+      const token = localStorage.getItem("token");
+
       async function fetchJSON(url, opts = {}) {
         const res = await fetch(url, {
           ...opts,

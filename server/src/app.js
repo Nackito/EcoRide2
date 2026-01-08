@@ -2,6 +2,8 @@ import cors from "cors";
 import "dotenv/config";
 import express from "express";
 import morgan from "morgan";
+import path from "path";
+import { fileURLToPath } from "url";
 import { ensureDatabase } from "./db/sqlite.js";
 import adminRouter from "./routes/admin.js";
 import authRouter from "./routes/auth.js";
@@ -14,8 +16,15 @@ app.use(morgan("dev"));
 
 await ensureDatabase();
 
+// Servir le dossier web statiquement (index.html, admin.html, employe.html)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const staticDir = path.resolve(__dirname, "../../web");
+app.use(express.static(staticDir));
+
+// Route racine: servir explicitement l'index du front
 app.get("/", (req, res) => {
-  res.json({ ok: true, name: "EcoRide API", version: "0.1.0" });
+  res.sendFile(path.join(staticDir, "index.html"));
 });
 
 app.use("/auth", authRouter);

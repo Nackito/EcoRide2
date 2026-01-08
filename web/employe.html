@@ -29,7 +29,7 @@
       </div>
     </div>
     <script>
-      const api = "http://localhost:3001";
+      const api = location.origin;
       const token = localStorage.getItem("token");
       if (!token) location = "index.html";
 

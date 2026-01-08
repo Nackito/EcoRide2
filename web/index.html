@@ -40,7 +40,7 @@
       </div>
     </div>
     <script>
-      const api = "http://localhost:3001";
+      const api = location.origin;
       const form = document.getElementById("loginForm");
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
@@ -49,8 +49,8 @@
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            email: fd.get("email"),
-            password: fd.get("password"),
+            email: String(fd.get("email")).trim(),
+            password: String(fd.get("password")),
           }),
         });
         const data = await res.json();

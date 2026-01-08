@@ -10,16 +10,23 @@ router.post("/login", (req, res) => {
   if (!email || !password)
     return res.status(400).json({ error: "email and password required" });
   const db = getDb();
+  const emailNorm = String(email).trim().toLowerCase();
   const user = db
     .prepare(
-      `SELECT u.*, r.libelle as role FROM utilisateurs u JOIN roles r ON r.id = u.role_id WHERE email = ?`
+      `SELECT u.*, r.libelle as role FROM utilisateurs u JOIN roles r ON r.id = u.role_id WHERE lower(email) = ?`
     )
-    .get(email);
-  if (!user) return res.status(401).json({ error: "Invalid credentials" });
-  if (!bcrypt.compareSync(password, user.password_hash))
-    return res.status(401).json({ error: "Invalid credentials" });
+    .get(emailNorm);
+  if (!user)
+    return res
+      .status(401)
+      .json({ error: "Invalid credentials: user-not-found" });
   if (user.suspended)
     return res.status(403).json({ error: "Account suspended" });
+  const ok = bcrypt.compareSync(String(password), user.password_hash);
+  if (!ok)
+    return res
+      .status(401)
+      .json({ error: "Invalid credentials: wrong-password" });
   const token = jwt.sign(
     { id: user.id, email: user.email, role: user.role },
     process.env.JWT_SECRET || "dev-secret",
