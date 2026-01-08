@@ -1,4 +1,32 @@
-# .gitignore
-
-server/node_modules/
+# Node / JS
 node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Env / secrets
+.env
+.env.local
+.env.*.local
+
+# Build outputs
+dist/
+build/
+.cache/
+
+# Editor / OS
+.vscode/
+.DS_Store
+
+# Project data (SQLite + NeDB)
+server/data/
+server/data/*.db
+server/data/*.sqlite
+
+# Dependencies per project
+server/node_modules/
+web/node_modules/
+
+# Coverage / tests (si ajoutés plus tard)
+coverage/
+.nyc_output/
