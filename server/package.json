@@ -11,13 +11,14 @@
     "reset": "node src/db/reset.js"
   },
   "dependencies": {
-    "sql.js": "^1.13.0",
+    "@seald-io/binary-search-tree": "^1.0.3",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
-    "nedb-promises": "^6.2.3"
+    "nedb-promises": "^6.2.3",
+    "sql.js": "^1.13.0"
   }
 }

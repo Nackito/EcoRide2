@@ -11,8 +11,16 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   </head>
   <body class="p-4">
+    <nav class="navbar navbar-expand navbar-light bg-light mb-3">
+      <div class="container-fluid">
+        <span class="navbar-brand">EcoRide — Admin</span>
+        <div class="d-flex">
+          <button id="logoutBtn" class="btn btn-outline-secondary btn-sm">Déconnexion</button>
+        </div>
+      </div>
+    </nav>
     <div class="container">
-      <h1>Admin</h1>
+      <h1 class="visually-hidden">Admin</h1>
       <div class="row g-4">
         <div class="col-md-6">
           <div class="card card-body">
@@ -59,12 +67,15 @@
       </div>
     </div>
     <script>
-      const api = "http://localhost:3001";
+      const api = location.origin;
       const token = localStorage.getItem("token");
       if (!token) location = "index.html";
 
-      const api = location.origin;
-      const token = localStorage.getItem("token");
+      // Déconnexion: supprimer le token et revenir à l'index
+      document.getElementById("logoutBtn").addEventListener("click", () => {
+        localStorage.removeItem("token");
+        location = "index.html";
+      });
 
       async function fetchJSON(url, opts = {}) {
         const res = await fetch(url, {
