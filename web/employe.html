@@ -15,6 +15,7 @@
       <div class="container-fluid">
         <span class="navbar-brand">EcoRide — Employé</span>
         <div class="d-flex">
+          <a href="/index.html" class="btn btn-link btn-sm me-2">Accueil</a>
           <button id="logoutBtn" class="btn btn-outline-secondary btn-sm">
             Déconnexion
           </button>
@@ -44,12 +45,12 @@
     <script>
       const api = location.origin;
       const token = localStorage.getItem("token");
-      if (!token) location = "index.html";
+      if (!token) location = "/login.html";
 
       // Déconnexion: supprimer le token et revenir à l'index
       document.getElementById("logoutBtn").addEventListener("click", () => {
         localStorage.removeItem("token");
-        location = "index.html";
+        location = "/login.html";
       });
 
       async function fetchJSON(url, opts = {}) {

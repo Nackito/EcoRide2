@@ -16,11 +16,17 @@ app.use(morgan("dev"));
 
 await ensureDatabase();
 
-// Servir le dossier web statiquement (index.html, admin.html, employe.html)
+// Servir les dossiers statiques: web (back-office) et public (site vitrine)
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const staticDir = path.resolve(__dirname, "../../web");
-app.use(express.static(staticDir));
+const webDir = path.resolve(__dirname, "../../web");
+const publicDir = path.resolve(__dirname, "../../public");
+
+// Back-office sous /app
+app.use("/app", express.static(webDir));
+
+// Site vitrine à la racine
+app.use(express.static(publicDir));
 
 // Favicon par défaut: rediriger /favicon.ico vers le favicon du web
 app.get("/favicon.ico", (req, res) => {
@@ -29,7 +35,7 @@ app.get("/favicon.ico", (req, res) => {
 
 // Route racine: servir explicitement l'index du front
 app.get("/", (req, res) => {
-  res.sendFile(path.join(staticDir, "index.html"));
+  res.sendFile(path.join(publicDir, "index.html"));
 });
 
 app.use("/auth", authRouter);

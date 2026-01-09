@@ -4,8 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js",
+    "start": "npm --prefix server start",
+    "dev": "npm --prefix server run dev",
     "test": "echo \"No tests yet\""
   },
   "keywords": [],

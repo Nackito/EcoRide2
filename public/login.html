@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>EcoRide • Connexion</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body data-page="login">
+    <header class="topbar">
+      <div class="brand">🌿 EcoRide</div>
+      <nav>
+        <a href="/index.html">Accueil</a>
+        <a href="/results.html">Covoiturages</a>
+        <a class="active" href="/login.html">Connexion</a>
+        <a href="/index.html#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main class="container">
+      <section class="card" style="max-width: 520px; margin: 2rem auto">
+        <h2>Se connecter</h2>
+        <form id="login-form">
+          <label
+            >Email
+            <input
+              type="email"
+              name="email"
+              required
+              value="admin@ecoride.local"
+            />
+          </label>
+          <label
+            >Mot de passe
+            <input type="password" name="password" required value="admin123" />
+          </label>
+          <button type="submit">Connexion</button>
+        </form>
+        <div id="login-msg" class="hint"></div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div>
+        Email:
+        <a href="mailto:contact@ecoride.example">contact@ecoride.example</a>
+      </div>
+      <div><a href="/mentions-legales.html">Mentions légales</a></div>
+    </footer>
+
+    <script>
+      const api = (() => {
+        try {
+          const u = new URL(location.href);
+          if (u.port === "3000") {
+            return `${u.protocol}//${u.hostname}:3001`;
+          }
+          return `${u.protocol}//${u.host}`;
+        } catch {
+          return "http://localhost:3001";
+        }
+      })();
+
+      const form = document.getElementById("login-form");
+      const msg = document.getElementById("login-msg");
+
+      async function postJSON(url, payload) {
+        const res = await fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        const ct = res.headers.get("content-type") || "";
+        let data = null;
+        if (ct.includes("application/json")) {
+          data = await res.json();
+        } else {
+          const text = await res.text();
+          data = { error: text };
+        }
+        return { res, data };
+      }
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const fd = new FormData(form);
+        const email = String(fd.get("email")).trim();
+        const password = String(fd.get("password"));
+        if (!email || !password) {
+          msg.textContent = "Email et mot de passe sont requis.";
+          msg.className = "error";
+          return;
+        }
+        msg.textContent = "Connexion en cours…";
+        msg.className = "hint";
+        try {
+          const { res, data } = await postJSON(api + "/auth/login", {
+            email,
+            password,
+          });
+          if (!res.ok) {
+            msg.textContent = data.error || "Identifiants invalides";
+            msg.className = "error";
+            return;
+          }
+          localStorage.setItem("token", data.token);
+          if (data.role === "admin") {
+            window.location = "/app/admin.html";
+          } else if (data.role === "employe") {
+            window.location = "/app/employe.html";
+          } else {
+            msg.textContent = "Rôle non supporté";
+            msg.className = "error";
+          }
+        } catch (err) {
+          msg.textContent =
+            "Erreur réseau. Vérifiez que le serveur tourne sur http://localhost:3001.";
+          msg.className = "error";
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -74,12 +74,12 @@
     <script>
       const api = location.origin;
       const token = localStorage.getItem("token");
-      if (!token) location = "index.html";
+      if (!token) location = "/login.html";
 
       // Déconnexion: supprimer le token et revenir à l'index
       document.getElementById("logoutBtn").addEventListener("click", () => {
         localStorage.removeItem("token");
-        location = "index.html";
+        location = "/login.html";
       });
 
       async function fetchJSON(url, opts = {}) {
