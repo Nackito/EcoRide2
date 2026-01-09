@@ -22,6 +22,11 @@ const __dirname = path.dirname(__filename);
 const staticDir = path.resolve(__dirname, "../../web");
 app.use(express.static(staticDir));
 
+// Favicon par défaut: rediriger /favicon.ico vers le favicon du web
+app.get("/favicon.ico", (req, res) => {
+  res.redirect("/favicon.svg");
+});
+
 // Route racine: servir explicitement l'index du front
 app.get("/", (req, res) => {
   res.sendFile(path.join(staticDir, "index.html"));

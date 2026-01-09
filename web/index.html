@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>EcoRide - Démo</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
@@ -15,12 +16,14 @@
       <p class="text-muted">Démo de connexion (admin ou employé)</p>
       <div class="row g-3">
         <div class="col-md-6">
-          <form id="loginForm" class="card card-body">
+          <form id="loginForm" class="card card-body" novalidate>
             <div class="mb-3">
               <label class="form-label">Email</label>
               <input
                 class="form-control"
                 name="email"
+                type="email"
+                required
                 value="admin@ecoride.local"
               />
             </div>
@@ -30,10 +33,11 @@
                 type="password"
                 class="form-control"
                 name="password"
+                required
                 value="admin123"
               />
             </div>
-            <button class="btn btn-primary w-100">Se connecter</button>
+            <button id="loginBtn" class="btn btn-primary w-100">Se connecter</button>
           </form>
           <div id="loginMsg" class="mt-2"></div>
         </div>
@@ -42,28 +46,42 @@
     <script>
       const api = location.origin;
       const form = document.getElementById("loginForm");
+      const btn = document.getElementById("loginBtn");
+      const msg = document.getElementById("loginMsg");
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
         const fd = new FormData(form);
+        // Validation simple
+        const email = String(fd.get("email")).trim();
+        const password = String(fd.get("password"));
+        if (!email || !password) {
+          msg.textContent = "Email et mot de passe sont requis.";
+          msg.className = "text-danger";
+          return;
+        }
+        msg.textContent = "Connexion en cours…";
+        msg.className = "text-muted";
+        btn.disabled = true;
         const res = await fetch(api + "/auth/login", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            email: String(fd.get("email")).trim(),
-            password: String(fd.get("password")),
+            email,
+            password,
           }),
         });
         const data = await res.json();
-        const msg = document.getElementById("loginMsg");
         if (!res.ok) {
           msg.textContent = data.error || "Erreur";
           msg.className = "text-danger";
+          btn.disabled = false;
           return;
         }
         localStorage.setItem("token", data.token);
         if (data.role === "admin") window.location = "admin.html";
         else if (data.role === "employe") window.location = "employe.html";
         else msg.textContent = "Rôle non supporté pour la démo";
+        btn.disabled = false;
       });
     </script>
   </body>
