@@ -8,6 +8,7 @@ import { ensureDatabase } from "./db/sqlite.js";
 import adminRouter from "./routes/admin.js";
 import authRouter from "./routes/auth.js";
 import employeeRouter from "./routes/employee.js";
+import userRouter from "./routes/user.js";
 
 const app = express();
 app.use(cors());
@@ -41,6 +42,7 @@ app.get("/", (req, res) => {
 app.use("/auth", authRouter);
 app.use("/admin", adminRouter);
 app.use("/employee", employeeRouter);
+app.use("/user", userRouter);
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {

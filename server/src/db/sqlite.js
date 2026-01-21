@@ -147,6 +147,38 @@ export async function ensureDatabase() {
       statut TEXT CHECK(statut IN ('pending','approved','rejected')) DEFAULT 'pending',
       created_at TEXT DEFAULT (datetime('now'))
     );
+
+    -- US8: modes utilisateur (driver/passenger)
+    CREATE TABLE IF NOT EXISTS user_modes (
+      utilisateur_id INTEGER PRIMARY KEY,
+      is_driver INTEGER DEFAULT 0,
+      is_passenger INTEGER DEFAULT 0
+    );
+
+    -- US8: préférences utilisateur
+    CREATE TABLE IF NOT EXISTS preferences (
+      utilisateur_id INTEGER PRIMARY KEY,
+      smoker_allowed INTEGER DEFAULT 0,
+      pets_allowed INTEGER DEFAULT 0,
+      extra TEXT
+    );
+
+    -- US8: véhicules
+    CREATE TABLE IF NOT EXISTS vehicules (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      utilisateur_id INTEGER NOT NULL,
+      plaque TEXT NOT NULL,
+      date_immatriculation TEXT,
+      marque TEXT,
+      modele TEXT,
+      couleur TEXT
+    );
+
+    -- US9: relation covoiturage → véhicule
+    CREATE TABLE IF NOT EXISTS covoiturage_vehicule (
+      covoiturage_id INTEGER PRIMARY KEY,
+      vehicule_id INTEGER NOT NULL
+    );
   `);
 
   const rolesCount = (

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
@@ -108,13 +108,14 @@
             window.location = "/app/admin.html";
           } else if (data.role === "employe") {
             window.location = "/app/employe.html";
+          } else if (data.role === "utilisateur") {
+            window.location = "/app/user.html";
           } else {
             msg.textContent = "Rôle non supporté";
             msg.className = "error";
           }
         } catch (err) {
-          msg.textContent =
-            "Erreur réseau. Vérifiez que le serveur tourne sur http://localhost:3001.";
+          msg.textContent = `Erreur réseau. Vérifiez que l'API répond sur ${api}.`;
           msg.className = "error";
         }
       });
