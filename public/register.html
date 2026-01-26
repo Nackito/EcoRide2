@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>EcoRide • Inscription</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body data-page="register">
+    <header class="topbar">
+      <div class="brand">🌿 EcoRide</div>
+      <nav>
+        <a href="/index.html">Accueil</a>
+        <a href="/results.html">Covoiturages</a>
+        <a href="/login.html">Connexion</a>
+        <a class="active" href="/register.html">Inscription</a>
+      </nav>
+    </header>
+
+    <main class="container">
+      <section class="card" style="max-width: 520px; margin: 2rem auto">
+        <h2>Créer un compte</h2>
+        <form id="reg-form" novalidate>
+          <fieldset style="border: 0; padding: 0; margin: 0 0 1rem 0">
+            <legend
+              style="font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem"
+            >
+              Identité
+            </legend>
+            <div class="form-group" style="margin-bottom: 0.5rem">
+              <label for="nom">Nom</label>
+              <input
+                id="nom"
+                type="text"
+                name="nom"
+                autocomplete="family-name"
+              />
+            </div>
+            <div class="form-group" style="margin-bottom: 0.5rem">
+              <label for="prenom">Prénom</label>
+              <input
+                id="prenom"
+                type="text"
+                name="prenom"
+                autocomplete="given-name"
+              />
+            </div>
+          </fieldset>
+
+          <fieldset style="border: 0; padding: 0; margin: 0 0 1rem 0">
+            <legend
+              style="font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem"
+            >
+              Compte
+            </legend>
+            <div class="form-group" style="margin-bottom: 0.5rem">
+              <label for="email">Email</label>
+              <input
+                id="email"
+                type="email"
+                name="email"
+                required
+                autocomplete="email"
+                aria-describedby="emailHelp"
+              />
+              <small id="emailHelp" class="hint"
+                >Nous n'utiliserons votre email que pour l'accès à votre
+                compte.</small
+              >
+            </div>
+            <div class="form-group" style="margin-bottom: 0.5rem">
+              <label for="password">Mot de passe</label>
+              <input
+                id="password"
+                type="password"
+                name="password"
+                required
+                autocomplete="new-password"
+                aria-describedby="pwdHelp"
+              />
+              <small id="pwdHelp" class="hint"
+                >Au moins 8 caractères recommandés.</small
+              >
+            </div>
+          </fieldset>
+
+          <button type="submit">S'inscrire</button>
+        </form>
+        <div id="reg-msg" class="hint"></div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div>
+        Email:
+        <a href="mailto:contact@ecoride.example">contact@ecoride.example</a>
+      </div>
+      <div><a href="/mentions-legales.html">Mentions légales</a></div>
+    </footer>
+
+    <script>
+      const api = (() => {
+        try {
+          const u = new URL(location.href);
+          if (u.port === "3000") {
+            return `${u.protocol}//${u.hostname}:3001`;
+          }
+          return `${u.protocol}//${u.host}`;
+        } catch {
+          return "http://localhost:3001";
+        }
+      })();
+
+      const form = document.getElementById("reg-form");
+      const msg = document.getElementById("reg-msg");
+
+      async function postJSON(url, payload) {
+        const res = await fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        const ct = res.headers.get("content-type") || "";
+        let data = null;
+        if (ct.includes("application/json")) data = await res.json();
+        else data = { error: await res.text() };
+        return { res, data };
+      }
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const fd = new FormData(form);
+        const nom = String(fd.get("nom") || "").trim();
+        const prenom = String(fd.get("prenom") || "").trim();
+        const email = String(fd.get("email") || "").trim();
+        const password = String(fd.get("password") || "");
+        if (!email || !password) {
+          msg.textContent = "Email et mot de passe sont requis.";
+          msg.className = "error";
+          return;
+        }
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+          msg.textContent = "Format email invalide.";
+          msg.className = "error";
+          document.getElementById("email")?.focus();
+          return;
+        }
+        msg.textContent = "Création en cours…";
+        msg.className = "hint";
+        try {
+          const { res, data } = await postJSON(api + "/auth/register", {
+            nom,
+            prenom,
+            email,
+            password,
+          });
+          if (!res.ok) {
+            msg.textContent = data.error || "Inscription impossible";
+            msg.className = "error";
+            return;
+          }
+          msg.textContent = "Compte créé. Redirection vers la connexion…";
+          msg.className = "hint";
+          setTimeout(() => (location.href = "/login.html"), 800);
+        } catch (err) {
+          msg.textContent = `Erreur réseau. Vérifiez que l'API répond sur ${api}.`;
+          msg.className = "error";
+        }
+      });
+    </script>
+  </body>
+</html>

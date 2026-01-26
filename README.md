@@ -43,6 +43,7 @@ http://localhost:3001/app/user.html
 ## Endpoints principaux
 
 - Auth: `POST /auth/login`
+- Auth: `POST /auth/register` (inscription), `POST /auth/login`
 - Employé: `GET /employee/avis/pending`, `POST /employee/avis/:id/validate`, `POST /employee/avis/:id/reject`, `GET /employee/covoiturages/incidents`
 - Admin: `POST /admin/users`, `PATCH /admin/users/:id/suspend`, `GET /admin/metrics/carpool-per-day`, `GET /admin/metrics/credits-per-day`, `GET /admin/metrics/credits-total`
 - Utilisateur (US8-11): `GET /user/modes`, `PUT /user/modes`, `GET /user/preferences`, `PUT /user/preferences`, `GET /user/vehicles`, `POST /user/vehicles`, `POST /user/trips`, `GET /user/trips/history`, `POST /user/trips/:id/start`, `POST /user/trips/:id/finish`, `POST /user/trips/:id/cancel`
