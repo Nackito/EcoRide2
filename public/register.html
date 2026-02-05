@@ -25,34 +25,18 @@
             <legend
               style="font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem"
             >
-              Identité
-            </legend>
-            <div class="form-group" style="margin-bottom: 0.5rem">
-              <label for="nom">Nom</label>
-              <input
-                id="nom"
-                type="text"
-                name="nom"
-                autocomplete="family-name"
-              />
-            </div>
-            <div class="form-group" style="margin-bottom: 0.5rem">
-              <label for="prenom">Prénom</label>
-              <input
-                id="prenom"
-                type="text"
-                name="prenom"
-                autocomplete="given-name"
-              />
-            </div>
-          </fieldset>
-
-          <fieldset style="border: 0; padding: 0; margin: 0 0 1rem 0">
-            <legend
-              style="font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem"
-            >
               Compte
             </legend>
+            <div class="form-group" style="margin-bottom: 0.5rem">
+              <label for="pseudo">Pseudo</label>
+              <input
+                id="pseudo"
+                type="text"
+                name="pseudo"
+                required
+                autocomplete="username"
+              />
+            </div>
             <div class="form-group" style="margin-bottom: 0.5rem">
               <label for="email">Email</label>
               <input
@@ -81,6 +65,16 @@
               <small id="pwdHelp" class="hint"
                 >Au moins 8 caractères recommandés.</small
               >
+            </div>
+            <div class="form-group" style="margin-bottom: 0.5rem">
+              <label for="password-confirm">Confirmer le mot de passe</label>
+              <input
+                id="password-confirm"
+                type="password"
+                name="password-confirm"
+                required
+                autocomplete="new-password"
+              />
             </div>
           </fieldset>
 
@@ -130,12 +124,12 @@
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
         const fd = new FormData(form);
-        const nom = String(fd.get("nom") || "").trim();
-        const prenom = String(fd.get("prenom") || "").trim();
+        const pseudo = String(fd.get("pseudo") || "").trim();
         const email = String(fd.get("email") || "").trim();
         const password = String(fd.get("password") || "");
-        if (!email || !password) {
-          msg.textContent = "Email et mot de passe sont requis.";
+        const passwordConfirm = String(fd.get("password-confirm") || "");
+        if (!pseudo || !email || !password || !passwordConfirm) {
+          msg.textContent = "Pseudo, email et mots de passe sont requis.";
           msg.className = "error";
           return;
         }
@@ -146,12 +140,18 @@
           document.getElementById("email")?.focus();
           return;
         }
+        if (password !== passwordConfirm) {
+          msg.textContent = "Les mots de passe ne correspondent pas.";
+          msg.className = "error";
+          alert("Les mots de passe ne correspondent pas.");
+          document.getElementById("password-confirm")?.focus();
+          return;
+        }
         msg.textContent = "Création en cours…";
         msg.className = "hint";
         try {
           const { res, data } = await postJSON(api + "/auth/register", {
-            nom,
-            prenom,
+            pseudo,
             email,
             password,
           });

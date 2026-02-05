@@ -26,6 +26,29 @@
       <div class="row g-4">
         <div class="col-md-4">
           <div class="card card-body">
+            <h5>Profil</h5>
+            <form id="profileForm">
+              <div class="mb-2">
+                <label class="form-label" for="profile_email">Email</label>
+                <input class="form-control" id="profile_email" disabled />
+              </div>
+              <div class="mb-2">
+                <label class="form-label" for="profile_pseudo">Pseudo</label>
+                <input class="form-control" id="profile_pseudo" disabled />
+              </div>
+              <div class="mb-2">
+                <label class="form-label" for="profile_nom">Nom</label>
+                <input class="form-control" id="profile_nom" />
+              </div>
+              <div class="mb-2">
+                <label class="form-label" for="profile_prenom">Prénom</label>
+                <input class="form-control" id="profile_prenom" />
+              </div>
+              <button class="btn btn-primary">Enregistrer</button>
+            </form>
+            <div id="profileMsg" class="mt-2"></div>
+          </div>
+          <div class="card card-body">
             <h5>Modes</h5>
             <form id="modesForm">
               <div class="form-check">
@@ -382,11 +405,38 @@
         });
 
       (async function init() {
+        await loadProfile();
         await loadModes();
         await loadPrefs();
         await loadVehicles();
         await loadHistory();
       })();
+
+      async function loadProfile() {
+        const u = await fetchJSON(api + "/user/profile");
+        document.getElementById("profile_email").value = u.email;
+        document.getElementById("profile_pseudo").value = u.pseudo || "";
+        document.getElementById("profile_nom").value = u.nom || "";
+        document.getElementById("profile_prenom").value = u.prenom || "";
+      }
+      document
+        .getElementById("profileForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          try {
+            await fetchJSON(api + "/user/profile", {
+              method: "PUT",
+              body: JSON.stringify({
+                nom: document.getElementById("profile_nom").value || null,
+                prenom: document.getElementById("profile_prenom").value || null,
+              }),
+            });
+            document.getElementById("profileMsg").textContent =
+              "Profil enregistré";
+          } catch (err) {
+            document.getElementById("profileMsg").textContent = err.message;
+          }
+        });
     </script>
   </body>
 </html>

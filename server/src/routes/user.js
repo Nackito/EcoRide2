@@ -258,3 +258,25 @@ router.post("/trips/:id/finish", (req, res) => {
 });
 
 export default router;
+// Profil utilisateur: lecture et mise à jour nom/prenom
+router.get("/profile", (req, res) => {
+  const db = getDb();
+  const u = db
+    .prepare(
+      "SELECT id, email, pseudo, nom, prenom FROM utilisateurs WHERE id = ?",
+    )
+    .get(req.user.id);
+  if (!u) return res.status(404).json({ error: "user-not-found" });
+  res.json(u);
+});
+
+router.put("/profile", (req, res) => {
+  const { nom = null, prenom = null } = req.body || {};
+  const db = getDb();
+  db.prepare("UPDATE utilisateurs SET nom = ?, prenom = ? WHERE id = ?").run(
+    nom,
+    prenom,
+    req.user.id,
+  );
+  res.json({ ok: true });
+});

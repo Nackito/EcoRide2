@@ -7,9 +7,11 @@ const router = Router();
 
 // Inscription utilisateur (rôle: utilisateur)
 router.post("/register", (req, res) => {
-  const { email, password, nom = null, prenom = null } = req.body || {};
-  if (!email || !password)
-    return res.status(400).json({ error: "email and password required" });
+  const { email, password, pseudo } = req.body || {};
+  if (!pseudo || !email || !password)
+    return res
+      .status(400)
+      .json({ error: "pseudo, email and password required" });
   const isValidEmail = (e) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(e));
   if (!isValidEmail(email)) {
     return res.status(400).json({ error: "invalid email format" });
@@ -27,9 +29,9 @@ router.post("/register", (req, res) => {
   const hash = bcrypt.hashSync(String(password), 10);
   const info = db
     .prepare(
-      "INSERT INTO utilisateurs (nom, prenom, email, password_hash, role_id) VALUES (?,?,?,?,?)",
+      "INSERT INTO utilisateurs (nom, prenom, email, password_hash, pseudo, role_id) VALUES (?,?,?,?,?,?)",
     )
-    .run(nom, prenom, emailNorm, hash, role.id);
+    .run(null, null, emailNorm, hash, String(pseudo).trim(), role.id);
   return res.status(201).json({ id: info.lastInsertRowid, email: emailNorm });
 });
 
